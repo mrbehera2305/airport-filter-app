@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import airportsData from "../data/airports.json";
+import airportsData from "../../data/airports.json";
+import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6";
+import "./AirportTable.css";
 
 const AirportTable = ({ filters, searchQuery, itemsPerPage }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     let data = airportsData;
@@ -24,47 +26,48 @@ const AirportTable = ({ filters, searchQuery, itemsPerPage }) => {
     }
 
     setFilteredData(data);
-
-    // Recalculate total pages based on filtered data
-    const newTotalPages = Math.ceil(data.length / itemsPerPage);
-    setTotalPages(newTotalPages);
-
-    // Reset current page to 1 if it exceeds the new total pages
-    if (currentPage > newTotalPages) {
-      setCurrentPage(1);
-    }
   }, [filters, searchQuery, itemsPerPage, currentPage]);
 
+  const totalResults = filteredData.length;
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
+  const endIndex = Math.min(currentPage * itemsPerPage, totalResults);
 
   if (paginatedData.length === 0) {
     return <p>Airport Not Found</p>;
   }
   return (
-    <>
+    <div className="table-container">
+      {" "}
       <table>
         <thead>
           <tr>
             <th>Name</th>
             <th>ICAO</th>
             <th>IATA</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
+            <th>Elev.</th>
+            <th>Lat.</th>
+            <th>Long.</th>
             <th>Type</th>
           </tr>
         </thead>
         <tbody>
           {paginatedData.map((airport) => (
             <tr key={airport.id}>
-              <td>{airport.name}</td>
-              <td>{airport.icao}</td>
-              <td>{airport.iata}</td>
-              <td>{airport.latitude}</td>
-              <td>{airport.longitude}</td>
-              <td>{airport.type}</td>
+              <td>
+                {airport.name.length > 15
+                  ? airport.name.substring(0, 15) + "..."
+                  : airport.name || "N/A"}
+              </td>
+              <td>{airport.icao || "N/A"}</td>
+              <td>{airport.iata || "N/A"}</td>
+              <td>{airport.elevation + " ft" || "N/A"}</td>
+              <td>{airport.latitude.toString().slice(0, 8) + "..."}</td>
+              <td> {airport.longitude.toString().slice(0, 8) + "..."}</td>
+              <td>{airport.type || "N/A"}</td>
             </tr>
           ))}
         </tbody>
@@ -74,21 +77,23 @@ const AirportTable = ({ filters, searchQuery, itemsPerPage }) => {
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
-          &lt; Prev
+          <FaArrowLeft />
         </button>
         <span>
-          Page {currentPage} of {totalPages}
+          Showing {startIndex} - {endIndex} of {totalResults} results
         </span>
         <button
           onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            setCurrentPage((prev) =>
+              Math.min(prev + 1, Math.ceil(totalResults / itemsPerPage))
+            )
           }
-          disabled={currentPage === totalPages}
+          disabled={currentPage === Math.ceil(totalResults / itemsPerPage)}
         >
-          Next &gt;
+          <FaArrowRight />
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

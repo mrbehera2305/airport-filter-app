@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Filters from "./Filters";
-import AirportTable from "./AirportTable";
+import Filters from "../filters/Filters";
+import AirportTable from "../airportTable/AirportTable";
+import "./AirportFilter.css";
 
 function AirportFilter() {
   const [filters, setFilters] = useState([]);
@@ -8,7 +9,10 @@ function AirportFilter() {
   const itemsPerPage = 4; // Configurable item count
 
   return (
-    <div className="App">
+    <>
+      <h1>
+        Filter <span>airports</span>
+      </h1>
       <Filters
         filters={filters}
         setFilters={setFilters}
@@ -20,7 +24,7 @@ function AirportFilter() {
         searchQuery={searchQuery}
         itemsPerPage={itemsPerPage}
       />
-    </div>
+    </>
   );
 }
 

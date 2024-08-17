@@ -1,48 +1,16 @@
 .App {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: "Roboto", sans-serif;
+  font-family: Arial, sans-serif;
+  padding: 35px;
+  padding-top: 5px !important;
+  margin :30px;
+  border: 15px solid #f3f3f3;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-th,
-td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 20px;
-}
-
-button {
-  padding: 10px;
-  margin: 5px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:disabled {
-  background-color: #ccc;
-}
-
-@media (max-width: 600px) {
-  th,
-  td {
-    padding: 5px;
-  }
-  button {
-    padding: 8px;
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .App {
+    padding: 10px;
+    border-width: 3px; 
+    margin: 10px;
   }
 }

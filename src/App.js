@@ -1,5 +1,5 @@
-import './App.css';
-import AirportFilter from './components/AirportFilter';
+import "./App.css";
+import AirportFilter from "./components/airportFilter/AirportFilter";
 
 function App() {
   return (

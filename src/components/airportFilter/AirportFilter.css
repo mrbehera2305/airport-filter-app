@@ -1,0 +1,16 @@
+h1 {
+  font-size: 50px;
+  font-weight: bolder;
+}
+
+h1 span {
+  font-weight: lighter;
+  color: #ddd;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 20px;
+  }
+}
